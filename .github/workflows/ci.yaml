@@ -1,0 +1,35 @@
+name: Unit Tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install library
+        run: poetry install --sync --no-root
+
+      - name: Run Lint
+        run: |
+          poetry run flake8
+
+      - name: Run tests
+        run: |
+          poetry run pytest -ra -q -vv --cov="."
+          poetry run codecov
