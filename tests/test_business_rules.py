@@ -12,4 +12,3 @@ def test_gen_cutter_table_works_ok(httpx_mock: HTTPXMock):
     with httpx.Client():
         response = gen_cutter_table()
         assert response['a'] == [('111', 'Aa'.lower()), ('112', 'Aabb'.lower())]
-        assert True
